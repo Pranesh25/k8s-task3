@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: "deploy2"
+  labels:
+     select: dbdeploy
+
+
+spec:
+   replicas: 1
+   selector:
+      matchExpressions:
+         - { key: prod, operator: In, values: [ frontend ] }
+ 
+   template:
+
+        metadata:
+          name: prod
+          labels:
+             region: in
+             prod: frontend
+        spec: 
+          containers:
+          - name: mydb
+            image: mysql:5.7
+            env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                     name: mysecret
+                     key: root_password
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                  secretKeyRef:
+                    name: mysecret
+                    key:  user_password
+            - name: MYSQL_PASSWORD
+              value: redhat
+            - name: MYSQL_DATABASE
+              value: wpdp
+            - name: MYSQL_USER
+              value: vinayak
