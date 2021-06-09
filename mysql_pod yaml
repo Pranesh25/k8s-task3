@@ -40,4 +40,4 @@ spec:
             - name: MYSQL_DATABASE
               value: wpdp
             - name: MYSQL_USER
-              value: vinayak
+              value: pranesh
