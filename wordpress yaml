@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: "deploy1"
+  labels:
+     select: wordpressdeploy
+
+spec:
+   replicas: 3
+   selector:
+      matchExpressions:
+         - { key: prod, operator: In, values: [ db ] }
+ 
+   template:
+
+        metadata:
+          name: prod
+          labels:
+             region: in
+             prod: db
+        spec: 
+          containers:
+          - name: "w1"
+            image: "wordpress:5.1.1-php7.3-apache"
